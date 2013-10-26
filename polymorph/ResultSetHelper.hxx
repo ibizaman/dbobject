@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <cppconn/resultset.h>
+#include "TypeConverter.h"
 
 namespace dbobject {
 
@@ -13,5 +14,7 @@ namespace ResultSetHelper {
 }
 
 }
+
+#include "ResultSetHelper.hpp"
 
 #endif

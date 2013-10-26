@@ -1,5 +1,5 @@
 #include "polymorph/ResultSetHelper.hxx"
-#include "polymorph/MySQLTypeConverter.h"
+#include "polymorph/TypeConverter.h"
 #include <stdexcept>
 
 namespace dbobject {
@@ -220,7 +220,7 @@ template<typename Tup, int I>
 auto Tuple::tupleToLiterals(const Tup& typedValues) const
     -> typename std::enable_if<I != std::tuple_size<Tup>::value, SQL::List<SQL::Literal>>::type
 {
-    SQL::Literal stringValue = MySQLTypeConverter::toString(std::get<I>(typedValues));
+    SQL::Literal stringValue = TypeConverter::toString(std::get<I>(typedValues));
 
     auto stringValues = tupleToLiterals<Tup, I+1>(typedValues);
     stringValues.insert(stringValues.begin(), stringValue);
@@ -239,7 +239,7 @@ template<typename TupleOfVectors, int I>
     auto Tuple::tupleOfVectorsRowToLiterals(const TupleOfVectors& vectors, int row) const
     -> typename std::enable_if<I != std::tuple_size<TupleOfVectors>::value, SQL::List<SQL::Literal>>::type
 {
-    SQL::Literal stringValue = MySQLTypeConverter::toString(std::get<I>(vectors).at(row));
+    SQL::Literal stringValue = TypeConverter::toString(std::get<I>(vectors).at(row));
 
     auto stringValues = tupleOfVectorsRowToLiterals<TupleOfVectors, I+1>(vectors, row);
     stringValues.insert(stringValues.begin(), stringValue);

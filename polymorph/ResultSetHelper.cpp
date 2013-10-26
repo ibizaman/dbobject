@@ -113,41 +113,5 @@ std::string get<std::string>(std::shared_ptr<sql::ResultSet> db, int column)
     return db->getString(column).asStdString();
 }
 
-template<>
-boost::posix_time::time_duration get<boost::posix_time::time_duration>(std::shared_ptr<sql::ResultSet> db, const std::string& column)
-{
-    return boost::posix_time::duration_from_string(get<std::string>(db, column));
-}
-
-template<>
-boost::posix_time::time_duration get<boost::posix_time::time_duration>(std::shared_ptr<sql::ResultSet> db, int column)
-{
-    return boost::posix_time::duration_from_string(get<std::string>(db, column));
-}
-
-template<>
-boost::posix_time::ptime get<boost::posix_time::ptime>(std::shared_ptr<sql::ResultSet> db, const std::string& column)
-{
-    return boost::posix_time::time_from_string(get<std::string>(db, column));
-}
-
-template<>
-boost::posix_time::ptime get<boost::posix_time::ptime>(std::shared_ptr<sql::ResultSet> db, int column)
-{
-    return boost::posix_time::time_from_string(get<std::string>(db, column));
-}
-
-template<>
-boost::gregorian::date get<boost::gregorian::date>(std::shared_ptr<sql::ResultSet> db, const std::string& column)
-{
-    return boost::gregorian::from_string(get<std::string>(db, column));
-}
-
-template<>
-boost::gregorian::date get<boost::gregorian::date>(std::shared_ptr<sql::ResultSet> db, int column)
-{
-    return boost::gregorian::from_string(get<std::string>(db, column));
-}
-
 }
 }
