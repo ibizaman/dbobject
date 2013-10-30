@@ -143,7 +143,7 @@ TEST_F( TupleTest, getAsTuples )
 TEST_F( TupleTest, storeOne )
 {
     test_tuple to_store{true, 365, "hello"};
-    SQL::Insert query = SQL::Query::insert().into("table").addValues({"1", "365", "hello"}); 
+    SQL::Insert query = SQL::Query::insert().into("table").addValues({true, 365, "hello"}); 
 
     EXPECT_CALL( *backend, query(query) );
 
@@ -158,9 +158,9 @@ TEST_F( TupleTest, storeTupleOfVectors )
         std::make_tuple(false, 250, "howdy")
     };
     SQL::Insert query = SQL::Query::insert().into("table")
-        .addValues({"1", "365", "hello"})
-        .addValues({"0", "320", "hi"})
-        .addValues({"0", "250", "howdy"});
+        .addValues({true, 365, "hello"})
+        .addValues({false, 320, "hi"})
+        .addValues({false, 250, "howdy"});
 
     EXPECT_CALL( *backend, query(query) );
 
@@ -175,9 +175,9 @@ TEST_F( TupleTest, storeVectorOfTuples )
         {"hello", "hi", "howdy"}
     };
     SQL::Insert query = SQL::Query::insert().into("table")
-        .addValues({"1", "365", "hello"})
-        .addValues({"0", "320", "hi"})
-        .addValues({"0", "250", "howdy"});
+        .addValues({true, 365, "hello"})
+        .addValues({false, 320, "hi"})
+        .addValues({false, 250, "howdy"});
 
     EXPECT_CALL( *backend, query(query) );
 
@@ -189,7 +189,7 @@ TEST_F( TupleTest, storeOrUpdateOne )
     test_tuple to_store{true, 365, "hello"};
     SQL::Insert query = SQL::Query::insert()
         .into("table")
-        .addValues({"1", "365", "hello"})
+        .addValues({true, 365, "hello"})
         .columnNames({"a", "b", "c"})
         .orUpdate();
 
@@ -206,9 +206,9 @@ TEST_F( TupleTest, storeOrUpdateTupleOfVectors )
         std::make_tuple(false, 250, "howdy")
     };
     SQL::Insert query = SQL::Query::insert().into("table")
-        .addValues({"1", "365", "hello"})
-        .addValues({"0", "320", "hi"})
-        .addValues({"0", "250", "howdy"})
+        .addValues({true, 365, "hello"})
+        .addValues({false, 320, "hi"})
+        .addValues({false, 250, "howdy"})
         .columnNames({"a", "b", "c"})
         .orUpdate();
 
@@ -225,9 +225,9 @@ TEST_F( TupleTest, storeOrUpdateVectorOfTuples )
         {"hello", "hi", "howdy"}
     };
     SQL::Insert query = SQL::Query::insert().into("table")
-        .addValues({"1", "365", "hello"})
-        .addValues({"0", "320", "hi"})
-        .addValues({"0", "250", "howdy"})
+        .addValues({true, 365, "hello"})
+        .addValues({false, 320, "hi"})
+        .addValues({false, 250, "howdy"})
         .columnNames({"a", "b", "c"})
         .orUpdate();
 

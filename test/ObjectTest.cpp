@@ -110,7 +110,7 @@ TEST_F( ObjectTest, storeOne )
     auto query = SQL::Query::insert()
         .into("DummyObject")
         .columnNames({"bool", "int", "string"})
-        .addValues({"0", "3", "hello"})
+        .addValues({false, 3, "hello"})
         .orUpdate();
 
     EXPECT_CALL( *backend, query(query) );
@@ -135,8 +135,8 @@ TEST_F( ObjectTest, storeList )
     auto query = SQL::Query::insert()
         .into("DummyObject")
         .columnNames({"bool", "int", "string"})
-        .addValues({"1", "3", "hello"})
-        .addValues({"0", "4", "hi"})
+        .addValues({true, 3, "hello"})
+        .addValues({false, 4, "hi"})
         .orUpdate();
 
     EXPECT_CALL( *backend, query(query) );
