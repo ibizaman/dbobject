@@ -1,6 +1,7 @@
 #ifndef DBOBJECT_SQL_QUERY_H
 #define DBOBJECT_SQL_QUERY_H
 
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include "sql/All.h"
@@ -31,6 +32,11 @@ public:
     virtual std::string getSQL() const = 0;
     bool operator==(const Query&) const;
 };
+
+::std::ostream& operator<<(::std::ostream&, const Query&);
+::std::ostream& operator<<(::std::ostream&, const Select&);
+::std::ostream& operator<<(::std::ostream&, const Insert&);
+::std::ostream& operator<<(::std::ostream&, const Update&);
 
 }
 }

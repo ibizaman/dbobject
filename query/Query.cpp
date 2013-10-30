@@ -42,5 +42,29 @@ bool Query::operator==(const Query& other) const
     return getSQL() == other.getSQL();
 }
 
+std::ostream& operator<<(std::ostream& out, const Query& query)
+{
+    out << query.getSQL();
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const Select& query)
+{
+    out << query.getSQL();
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const Insert& query)
+{
+    out << query.getSQL();
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const Update& query)
+{
+    out << query.getSQL();
+    return out;
+}
+
 }
 }
