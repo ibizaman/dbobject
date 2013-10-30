@@ -11,12 +11,8 @@ namespace SQL {
 class Literal : public SimpleExpr
 {
 public:
-    Literal(const std::string&);
-    Literal(const char*);
-    Literal(bool);
-    Literal(int);
-    Literal(double);
-    Literal(const SimpleExpr&);
+    template<typename T>
+    Literal(T);
 };
 
 class IntLiteral : public Literal
@@ -38,5 +34,7 @@ Literal operator"" _l(long double);
 
 }
 }
+
+#include "Literal.hpp"
 
 #endif

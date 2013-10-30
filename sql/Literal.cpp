@@ -4,33 +4,45 @@
 namespace dbobject {
 namespace SQL {
 
-Literal::Literal(const std::string& value)
+template<>
+Literal::Literal(std::string value)
     : SimpleExpr('\''+value+'\'')
 {
 }
 
+template<>
 Literal::Literal(const char* value)
     : SimpleExpr('\''+std::string(value)+'\'')
 {
 }
 
-Literal::Literal(bool value)
+template<>
+Literal::Literal(SimpleExpr value)
     : SimpleExpr(TypeConverter::toString(value))
 {
 }
 
+template<>
 Literal::Literal(int value)
     : SimpleExpr(TypeConverter::toString(value))
 {
 }
 
+template<>
 Literal::Literal(double value)
     : SimpleExpr(TypeConverter::toString(value))
 {
 }
 
-Literal::Literal(const SimpleExpr& value)
-    : SimpleExpr(value)
+template<>
+Literal::Literal(bool value)
+    : SimpleExpr(TypeConverter::toString(value))
+{
+}
+
+template<>
+Literal::Literal(IntLiteral value)
+    : SimpleExpr(TypeConverter::toString(value._value))
 {
 }
 
