@@ -40,7 +40,9 @@ void Object::storeList(const typename List<T>::type& objects)
         tuples.push_back(Properties<T>::toTuple(object));
     }
 
-    _db->store(Properties<T>::table, Properties<T>::fields, tuples);
+    if (objects.size() > 0) {
+        _db->store(Properties<T>::table, Properties<T>::fields, tuples);
+    }
 }
 
 }

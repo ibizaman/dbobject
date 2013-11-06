@@ -47,7 +47,6 @@ TEST_F( ObjectTest, getOne )
     EXPECT_CALL( *result, getInt(2) ).WillOnce(Return(3));
     EXPECT_CALL( *result, getString(3) ).WillOnce(Return(std::string("hello")));
 
-    //auto o = db->getDummyObject("hello");
     auto o = db->getOne<DummyObject>("string"_c == "hello"_l);
 
     EXPECT_EQ( expect.getBool(), o->getBool() );
@@ -141,5 +140,13 @@ TEST_F( ObjectTest, storeList )
 
     EXPECT_CALL( *backend, query(query) );
 
+    db->storeList<DummyObject>(list);
+}
+
+TEST_F( ObjectTest, storeListEmpty )
+{
+    List<DummyObject>::type list;
+
+    // nothing expected - no sql call should be done
     db->storeList<DummyObject>(list);
 }
