@@ -6,6 +6,8 @@
 #include "polymorph/Delayed.hxx"
 
 namespace dbobject {
+class MySQLBackend;
+
 namespace SQL {
 
 class Select : public Query
@@ -37,6 +39,8 @@ private:
     Delayed<PolymorphicType<Expression>> _having;
     List<OrderBy> _orderBy;
     Delayed<IntLiteral> _limit;
+
+    friend ::dbobject::MySQLBackend;
 };
 
 }

@@ -6,6 +6,8 @@
 #include "polymorph/Delayed.hxx"
 
 namespace dbobject {
+class MySQLBackend;
+
 namespace SQL {
 
 class Insert : public Query
@@ -29,6 +31,8 @@ private:
     Delayed<List<ColumnAssignement>> _onDuplicate;
 
     std::string zipColumnNameLiteral(const List<ColumnName>&, const List<Literal>&) const;
+
+    friend ::dbobject::MySQLBackend;
 };
 
 }

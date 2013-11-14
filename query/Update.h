@@ -5,6 +5,8 @@
 #include "polymorph/PolymorphicType.hxx"
 
 namespace dbobject {
+class MySQLBackend;
+
 namespace SQL {
 
 class Update : public Query
@@ -27,6 +29,8 @@ private:
     Delayed<PolymorphicType<Expression>> _where;
     List<OrderBy> _orderBy;
     Delayed<IntLiteral> _limit;
+
+    friend ::dbobject::MySQLBackend;
 };
 
 }

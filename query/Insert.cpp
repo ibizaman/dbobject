@@ -19,11 +19,11 @@ std::string Insert::getSQL() const
     if (!_into.initialized()) {
         throw malformed_sql("Insert query malformed, no table defined : " + sql);
     }
+    sql += "INSERT INTO " + (*_into.get())();
+
     if (_values.size() < 1) {
         throw malformed_sql("Insert query malformed, no values to insert : " + sql);
     }
-
-    sql += "INSERT INTO " + (*_into.get())();
 
     if (_columns.initialized() && _values.size() == 1) {
         sql += " SET " + zipColumnNameLiteral(_columns.get(), _values.at(0));

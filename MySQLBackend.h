@@ -1,7 +1,9 @@
 #ifndef DBOBJECT_MYSQLBACKEND_H
 #define DBOBJECT_MYSQLBACKEND_H
 
+#include <stdexcept>
 #include <cppconn/connection.h>
+#include <cppconn/exception.h>
 #include "Backend.h"
 
 namespace sql {
@@ -22,7 +24,17 @@ public:
 
 private:
     std::shared_ptr<sql::Connection> _conn;
+    void manageError(const sql::SQLException&, const std::string&, const std::string&, long unsigned int);
 };
+
+namespace MySQLBackendExceptions
+{
+    class BadColumnCount : public std::logic_error
+    {
+    public:
+        using std::logic_error::logic_error;
+    };
+}
 
 }
 
