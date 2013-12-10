@@ -1,6 +1,4 @@
 #include "TypeConverter.h"
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 
 namespace dbobject {
@@ -10,6 +8,12 @@ template<>
 std::string toString(const boost::posix_time::time_duration& duration, ConversionType)
 {
     return boost::posix_time::to_simple_string(duration);
+}
+
+template<>
+boost::posix_time::time_duration fromString(const std::string& str, ConversionType)
+{
+    return boost::posix_time::duration_from_string(str);
 }
 
 template<>
