@@ -45,4 +45,66 @@ void Object::storeList(const typename List<T>::type& objects)
     }
 }
 
+// mapOnGetters
+
+template<typename Tuple, typename T, typename... Getters>
+Tuple Object::mapOnGetters(T object, Getters... getters)
+{
+    Tuple tuple;
+    mapOnGetters<0>(&tuple, object.get(), getters...);
+    return tuple;
+}
+
+template<int I, typename Tuple, typename T>
+void Object::mapOnGetters(Tuple*, T)
+{
+}
+
+template<int I, typename Tuple, typename T, typename Getter, typename... Rest>
+typename std::enable_if<std::is_member_function_pointer<Getter>::value, void>::type
+    Object::mapOnGetters(Tuple* tuple, T object, Getter getter, Rest... getters)
+{
+    std::get<I>(*tuple) = (object->*getter)();
+    mapOnGetters<I+1>(tuple, object, getters...);
+}
+
+template<int I, typename Tuple, typename T, typename Getter, typename... Rest>
+typename std::enable_if<!std::is_member_function_pointer<Getter>::value, void>::type
+    Object::mapOnGetters(Tuple* tuple, T object, Getter getter, Rest... getters)
+{
+    std::get<I>(*tuple) = object->*getter;
+    mapOnGetters<I+1>(tuple, object, getters...);
+}
+
+// mapOnSetters
+
+template<typename T, typename Tuple, typename... Setters>
+typename Ptr<T>::type Object::mapOnSetters(Tuple tuple, Setters... setters)
+{
+    typename Ptr<T>::type object(new T);
+    mapOnSetters<0>(object.get(), tuple, setters...);
+    return object;
+}
+
+template<int I, typename T, typename Tuple>
+void Object::mapOnSetters(T*, Tuple)
+{
+}
+
+template<int I, typename T, typename Tuple, typename Setter, typename... Rest>
+typename std::enable_if<std::is_member_function_pointer<Setter>::value, void>::type
+    Object::mapOnSetters(T* object, Tuple tuple, Setter setter, Rest... setters)
+{
+    (object->*setter)(std::get<I>(tuple));
+    mapOnSetters<I+1>(object, tuple, setters...);
+}
+
+template<int I, typename T, typename Tuple, typename Setter, typename... Rest>
+typename std::enable_if<!std::is_member_function_pointer<Setter>::value, void>::type
+    Object::mapOnSetters(T* object, Tuple tuple, Setter setter, Rest... setters)
+{
+    object->*setter = std::get<I>(tuple);
+    mapOnSetters<I+1>(object, tuple, setters...);
+}
+
 }

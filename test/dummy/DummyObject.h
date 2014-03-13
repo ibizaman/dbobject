@@ -12,13 +12,14 @@ public:
     int getBool() const {return _b;}
     void setInt(int i) {_i = i;}
     int getInt() const {return _i;}
-    void setString(std::string s) {_s = s;}
-    std::string getString() const {return _s;}
+    void setString(std::string s_) {s = s_;}
+    std::string getString() const {return s;}
+
+    std::string s;
 
 private:
     bool _b;
     int _i;
-    std::string _s;
 };
 
 template<> struct Object::Properties<DummyObject>
@@ -29,20 +30,22 @@ template<> struct Object::Properties<DummyObject>
 
     static Ptr<DummyObject>::type fromTuple(const tuple& t)
     {
-        Ptr<DummyObject>::type o(new DummyObject);
-        o->setBool(std::get<0>(t));
-        o->setInt(std::get<1>(t));
-        o->setString(std::get<2>(t));
-        return o;
+        return mapOnSetters<DummyObject>(
+                t,
+                &DummyObject::setBool,
+                &DummyObject::setInt,
+                &DummyObject::s
+            );
     }
 
     static tuple toTuple(const Ptr<DummyObject>::type& o)
     {
-        tuple t;
-        std::get<0>(t) = o->getBool();
-        std::get<1>(t) = o->getInt();
-        std::get<2>(t) = o->getString();
-        return t;
+        return mapOnGetters<tuple>(
+                o,
+                &DummyObject::getBool,
+                &DummyObject::getInt,
+                &DummyObject::s
+            );
     }
 };
 
