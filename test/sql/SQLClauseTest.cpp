@@ -5,7 +5,21 @@
 #include <string>
 #include <sstream>
 #include <boost/date_time/gregorian/gregorian.hpp>
-#include "lib/dbobject/polymorph/TypeConverter.h"
+#include "lib/TypeConverter.h"
+
+namespace dbobject {
+    struct DummyLiteralObject {
+        std::string s;
+    };
+}
+
+namespace TypeConverter {
+    template<>
+    std::string toString(const ::dbobject::DummyLiteralObject& d, ConversionType)
+    {
+        return "string: " + d.s;
+    }
+}
 
 namespace dbobject {
 
@@ -51,18 +65,6 @@ TEST( SQLClause, DateLiteral )
 {
     SQL::Literal l(boost::gregorian::from_string("2013/12/01"));
     EXPECT_EQ( "'2013-12-1'", l() );
-}
-
-struct DummyLiteralObject {
-    std::string s;
-};
-
-namespace TypeConverter {
-    template<>
-    std::string toString(const DummyLiteralObject& d, ConversionType)
-    {
-        return "string: " + d.s;
-    }
 }
 
 TEST( SQLClause, NewLiteralType )

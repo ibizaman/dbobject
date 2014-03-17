@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include <cppconn/resultset.h>
-#include "TypeConverter.h"
+#include "lib/TypeConverter.h"
 
 namespace dbobject {
 
