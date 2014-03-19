@@ -15,7 +15,7 @@ namespace dbobject {
 
 namespace TypeConverter {
     template<>
-    std::string toString(const ::dbobject::DummyLiteralObject& d, ConversionType)
+    std::string toString(const ::dbobject::DummyLiteralObject& d)
     {
         return "string: " + d.s;
     }
