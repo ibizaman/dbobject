@@ -64,7 +64,7 @@ TEST( SQLClause, DoubleLiteral )
 TEST( SQLClause, DateLiteral )
 {
     SQL::Literal l(boost::gregorian::from_string("2013/12/01"));
-    EXPECT_EQ( "'2013-12-1'", l() );
+    EXPECT_EQ( "'2013/12/1'", l() );
 }
 
 TEST( SQLClause, NewLiteralType )
