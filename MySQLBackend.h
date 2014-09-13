@@ -24,7 +24,7 @@ public:
 
 private:
     std::shared_ptr<sql::Connection> _conn;
-    void manageError(const sql::SQLException&, const std::string&, const std::string&, long unsigned int);
+    void manageError(const sql::SQLException&, const std::string&, const std::string&);
 };
 
 namespace MySQLBackendExceptions

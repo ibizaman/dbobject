@@ -27,7 +27,7 @@ std::shared_ptr<sql::ResultSet> MySQLBackend::query(const SQL::Select& query)
     try {
         result = std::shared_ptr<sql::ResultSet>(_conn->createStatement()->executeQuery(query.getSQL()));
     } catch (sql::SQLException& e) {
-        manageError(e, query.getSQL(), (*query._from.get())(), query._columns.get().size());
+        manageError(e, query.getSQL(), (*query._from.get())());
     }
 
     return result;
@@ -43,7 +43,7 @@ Backend::count MySQLBackend::query(const SQL::Insert& query)
     try {
         c = _conn->createStatement()->executeUpdate(query.getSQL());
     } catch (sql::SQLException& e) {
-        manageError(e, query.getSQL(), (*query._into.get())(), query._columns.get().size());
+        manageError(e, query.getSQL(), (*query._into.get())());
     }
 
     return c;
@@ -59,13 +59,13 @@ Backend::count MySQLBackend::query(const SQL::Update& query)
     try {
         c = _conn->createStatement()->executeUpdate(query.getSQL());
     } catch (sql::SQLException& e) {
-        manageError(e, query.getSQL(), (*query._update.get())(), query._set.get().size());
+        manageError(e, query.getSQL(), (*query._update.get())());
     }
 
     return c;
 }
 
-void MySQLBackend::manageError(const sql::SQLException& e, const std::string& query, const std::string& table, long unsigned int columnCount)
+void MySQLBackend::manageError(const sql::SQLException& e, const std::string& query, const std::string& table)
 {
     switch (e.getErrorCode()) {
     case 1136:
@@ -73,8 +73,8 @@ void MySQLBackend::manageError(const sql::SQLException& e, const std::string& qu
         std::string tableName = table;
         std::shared_ptr<sql::ResultSet> tableDescription(_conn->createStatement()->executeQuery("DESCRIBE "+tableName));
         std::stringstream error;
-        error << "Tried to insert " << columnCount << " columns "
-              << "in table " << tableName
+        error << "Tried to insert bad columns number"
+              << " in table " << tableName
               << " which has "
               << tableDescription->rowsCount()
               << " columns\n"
