@@ -4,6 +4,7 @@
 #include <string>
 #include "SimpleExpr.h"
 #include "polymorph/PolymorphicType.hxx"
+#include "lib/typeconverter/TypeConverter.h"
 
 namespace dbobject {
 namespace SQL {

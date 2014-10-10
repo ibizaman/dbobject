@@ -27,7 +27,7 @@ add_library(dbobject
     Tuple.cpp
 )
 
-target_link_libraries(dbobject utils)
+target_link_libraries(dbobject utils typeconverter)
 
 
 enable_testing()

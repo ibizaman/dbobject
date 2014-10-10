@@ -1,5 +1,4 @@
 #include "Literal.h"
-#include "lib/TypeConverter.h"
 
 namespace dbobject {
 namespace SQL {

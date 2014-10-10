@@ -5,7 +5,8 @@
 #include <string>
 #include <sstream>
 #include <boost/date_time/gregorian/gregorian.hpp>
-#include "lib/TypeConverter.h"
+#include "lib/typeconverter/TypeConverter.h"
+#include "lib/Datetime.h"
 
 namespace dbobject {
     struct DummyLiteralObject {
@@ -29,7 +30,7 @@ TEST( SQLClause, Literal )
 {
     SQL::Literal l("hello");
     EXPECT_EQ( "'hello'", l() );
-    
+ 
     SQL::Literal l2 = "hello"_l;
     EXPECT_EQ( "'hello'", l2() );
 }
@@ -63,7 +64,7 @@ TEST( SQLClause, DoubleLiteral )
 
 TEST( SQLClause, DateLiteral )
 {
-    SQL::Literal l(boost::gregorian::from_string("2013/12/01"));
+    SQL::Literal l(datetime::Date(2013, 12, 1));
     EXPECT_EQ( "'2013/12/1'", l() );
 }
 
