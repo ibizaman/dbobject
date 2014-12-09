@@ -99,7 +99,7 @@ std::string concat(const std::map<K,V>& map, const std::string& center, const st
         result += rvalue;
         result += link;
     }
-    result.erase(result.end()-link.size(), result.end());
+    result.erase(result.size()-link.size());
 
     return result;
 }

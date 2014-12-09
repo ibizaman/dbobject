@@ -12,7 +12,7 @@ namespace dbobject {
 class Backend
 {
 public:
-    typedef unsigned int count;
+    typedef int count;
 
     virtual std::shared_ptr<sql::ResultSet> query(const SQL::Select&) = 0;
     virtual count query(const SQL::Insert&) = 0;

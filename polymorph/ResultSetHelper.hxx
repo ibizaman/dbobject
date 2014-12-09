@@ -10,45 +10,45 @@ namespace dbobject {
 
 namespace ResultSetHelper {
     template<typename T>
-    T get(std::shared_ptr<sql::ResultSet>, int);
+    T get(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<typename T>
     T get(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
     std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet>, int);
+    std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     bool get<bool>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    bool get<bool>(std::shared_ptr<sql::ResultSet>, int);
+    bool get<bool>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     long double get<long double>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    long double get<long double>(std::shared_ptr<sql::ResultSet>, int);
+    long double get<long double>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     int32_t get<int32_t>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    int32_t get<int32_t>(std::shared_ptr<sql::ResultSet>, int);
+    int32_t get<int32_t>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet>, int);
+    uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     int64_t get<int64_t>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    int64_t get<int64_t>(std::shared_ptr<sql::ResultSet>, int);
+    int64_t get<int64_t>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet>, int);
+    uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet>, int);
+    sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet>, unsigned int);
     template<>
     std::string get<std::string>(std::shared_ptr<sql::ResultSet>, const std::string&);
     template<>
-    std::string get<std::string>(std::shared_ptr<sql::ResultSet>, int);
+    std::string get<std::string>(std::shared_ptr<sql::ResultSet>, unsigned int);
 }
 
 }

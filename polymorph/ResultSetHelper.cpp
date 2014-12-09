@@ -12,7 +12,7 @@ std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet> db, const std::
 }
 
 template<>
-std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet> db, int column)
+std::istream* get<std::istream*>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getBlob(column);
 }
@@ -24,7 +24,7 @@ bool get<bool>(std::shared_ptr<sql::ResultSet> db, const std::string& column)
 }
 
 template<>
-bool get<bool>(std::shared_ptr<sql::ResultSet> db, int column)
+bool get<bool>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getBoolean(column);
 }
@@ -36,7 +36,7 @@ long double get<long double>(std::shared_ptr<sql::ResultSet> db, const std::stri
 }
 
 template<>
-long double get<long double>(std::shared_ptr<sql::ResultSet> db, int column)
+long double get<long double>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getDouble(column);
 }
@@ -48,7 +48,7 @@ int32_t get<int32_t>(std::shared_ptr<sql::ResultSet> db, const std::string& colu
 }
 
 template<>
-int32_t get<int32_t>(std::shared_ptr<sql::ResultSet> db, int column)
+int32_t get<int32_t>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getInt(column);
 }
@@ -60,7 +60,7 @@ uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet> db, const std::string& co
 }
 
 template<>
-uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet> db, int column)
+uint32_t get<uint32_t>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getUInt(column);
 }
@@ -72,7 +72,7 @@ int64_t get<int64_t>(std::shared_ptr<sql::ResultSet> db, const std::string& colu
 }
 
 template<>
-int64_t get<int64_t>(std::shared_ptr<sql::ResultSet> db, int column)
+int64_t get<int64_t>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getInt64(column);
 }
@@ -84,7 +84,7 @@ uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet> db, const std::string& co
 }
 
 template<>
-uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet> db, int column)
+uint64_t get<uint64_t>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getUInt64(column);
 }
@@ -96,7 +96,7 @@ sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet> db, const std
 }
 
 template<>
-sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet> db, int column)
+sql::SQLString get<sql::SQLString>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getString(column);
 }
@@ -108,7 +108,7 @@ std::string get<std::string>(std::shared_ptr<sql::ResultSet> db, const std::stri
 }
 
 template<>
-std::string get<std::string>(std::shared_ptr<sql::ResultSet> db, int column)
+std::string get<std::string>(std::shared_ptr<sql::ResultSet> db, unsigned int column)
 {
     return db->getString(column).asStdString();
 }

@@ -34,7 +34,7 @@ template<typename... Ts> struct VectorOfTuples<std::tuple<Ts...>>
 class Tuple
 {
 public:
-    typedef unsigned int count;
+    typedef int count;
 
     Tuple(std::shared_ptr<Backend>);
     void setBackend(std::shared_ptr<Backend>);

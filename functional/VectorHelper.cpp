@@ -23,7 +23,7 @@ std::string concat(const std::vector<std::string>& vs, const std::string& link, 
         result += right;
         result += link;
     }
-    result.erase(result.end()-link.size(), result.end());
+    result.erase(result.size()-link.size());
 
     return result;
 }
