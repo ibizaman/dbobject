@@ -15,11 +15,14 @@ namespace dbobject {
 }
 
 namespace TypeConverter {
-    template<>
-    std::string toString(const ::dbobject::DummyLiteralObject& d)
-    {
-        return "string: " + d.s;
-    }
+namespace impl {
+    template<> struct TypeConverter<::dbobject::DummyLiteralObject> {
+        static std::string toString(const ::dbobject::DummyLiteralObject& d, const Settings&)
+        {
+            return "string: " + d.s;
+        }
+    };
+}
 }
 
 namespace dbobject {
