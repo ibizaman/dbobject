@@ -326,4 +326,52 @@ TEST( SQLClause, AssignementList )
     EXPECT_EQ( "false", (*(*assignement)->right())() );
 }
 
+TEST( SQLClause, And )
+{
+    SQL::Expression expr("a"_c == 1_l && "b"_c == "b"_l);
+ 
+    ASSERT_EQ("`a` = 1 AND `b` = 'b'", expr());
+}
+
+TEST( SQLClause, AndEmpty )
+{
+    SQL::Expression expr1(SQL::Expression() && "a"_c == 1_l);
+    SQL::Expression expr2("a"_c == 1_l && SQL::Expression());
+ 
+    ASSERT_EQ("`a` = 1", expr1());
+    ASSERT_EQ("`a` = 1", expr2());
+}
+
+TEST( SQLClause, Or )
+{
+    SQL::Expression expr("a"_c == 1_l || "b"_c == "b"_l);
+ 
+    ASSERT_EQ("`a` = 1 OR `b` = 'b'", expr());
+}
+
+TEST( SQLClause, OrEmpty )
+{
+    SQL::Expression expr1(SQL::Expression() || "a"_c == 1_l);
+    SQL::Expression expr2("a"_c == 1_l || SQL::Expression());
+ 
+    ASSERT_EQ("`a` = 1", expr1());
+    ASSERT_EQ("`a` = 1", expr2());
+}
+
+TEST( SQLClause, Xor )
+{
+    SQL::Expression expr("a"_c == 1_l ^ "b"_c == "b"_l);
+ 
+    ASSERT_EQ("`a` = 1 XOR `b` = 'b'", expr());
+}
+
+TEST( SQLClause, XorEmpty )
+{
+    SQL::Expression expr1(SQL::Expression() ^ "a"_c == 1_l);
+    SQL::Expression expr2("a"_c == 1_l ^ SQL::Expression());
+ 
+    ASSERT_EQ("`a` = 1", expr1());
+    ASSERT_EQ("`a` = 1", expr2());
+}
+
 }

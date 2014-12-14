@@ -109,17 +109,41 @@ Expression operator!=(const SimpleExpr& left, const SimpleExpr& right)
  */
 Expression operator||(const Expression& left, const Expression& right)
 {
-    return Expression(left() + " OR " + right());
+    auto l = left();
+    auto r = right();
+    if (l.empty()) {
+        return right;
+    } else if (r.empty()) {
+        return left;
+    } else {
+        return Expression(left() + " OR " + right());
+    }
 }
 
 Expression operator^(const Expression& left, const Expression& right)
 {
-    return Expression(left() + " XOR " + right());
+    auto l = left();
+    auto r = right();
+    if (l.empty()) {
+        return right;
+    } else if (r.empty()) {
+        return left;
+    } else {
+        return Expression(left() + " XOR " + right());
+    }
 }
 
 Expression operator&&(const Expression& left, const Expression& right)
 {
-    return Expression(left() + " AND " + right());
+    auto l = left();
+    auto r = right();
+    if (l.empty()) {
+        return right;
+    } else if (r.empty()) {
+        return left;
+    } else {
+        return Expression(left() + " AND " + right());
+    }
 }
 
 Expression operator!(const Expression& expr)
