@@ -41,8 +41,12 @@ std::string Select::getSQL() const
             sql += " ORDER BY " + _orderBy();
         }
 
-        if (_limit.initialized()) {
-            sql += " LIMIT " + (_limit.get())();
+        if (_limit_row_count.initialized()) {
+            sql += " LIMIT ";
+            if (_limit_offset.initialized()) {
+                sql += (_limit_offset.get())() + ", ";
+            }
+            sql += (_limit_row_count.get())();
         }
 
     } catch(non_initialized_optional&) {
@@ -106,9 +110,16 @@ Select& Select::orderBy(const List<OrderBy>& orderBy)
     return *this;
 }
 
-Select& Select::limit(int limit)
+Select& Select::limit(unsigned int limit_row_count)
 {
-    _limit = limit;
+    _limit_row_count = limit_row_count;
+    return *this;
+}
+
+Select& Select::limit(unsigned int limit_offset, unsigned int limit_row_count)
+{
+    _limit_offset = limit_offset;
+    _limit_row_count = limit_row_count;
     return *this;
 }
 

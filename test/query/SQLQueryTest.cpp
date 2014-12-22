@@ -93,6 +93,26 @@ TEST( SQLSelectTest, fromOrderby )
     ASSERT_EQ( sql, query.getSQL() );
 }
 
+TEST( SQLSelectTest, fromLimit1 )
+{
+    SQL::Select query;
+
+    query.from("table").limit(1);
+    std::string sql = "SELECT * FROM `table` LIMIT 1";
+
+    ASSERT_EQ( sql, query.getSQL() );
+}
+
+TEST( SQLSelectTest, fromLimit2 )
+{
+    SQL::Select query;
+
+    query.from("table").limit(1, 2);
+    std::string sql = "SELECT * FROM `table` LIMIT 1, 2";
+
+    ASSERT_EQ( sql, query.getSQL() );
+}
+
 TEST( SQLInsertTest, insert )
 {
     SQL::Insert query;

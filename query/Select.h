@@ -25,7 +25,8 @@ public:
     Select& groupBy(const List<GroupBy>&);
     Select& having(const PolymorphicType<Expression>&);
     Select& orderBy(const List<OrderBy>&);
-    Select& limit(int);
+    Select& limit(unsigned int);
+    Select& limit(unsigned int, unsigned int);
 
     virtual std::string getSQL() const override;
 
@@ -38,7 +39,8 @@ private:
     List<GroupBy> _groupBy;
     Delayed<PolymorphicType<Expression>> _having;
     List<OrderBy> _orderBy;
-    Delayed<IntLiteral> _limit;
+    Delayed<ValueLiteral<unsigned int>> _limit_row_count;
+    Delayed<ValueLiteral<unsigned int>> _limit_offset;
 
     friend ::dbobject::MySQLBackend;
 };
