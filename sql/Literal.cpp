@@ -16,50 +16,9 @@ Literal::Literal(const char* value)
 }
 
 template<>
-Literal::Literal(SimpleExpr value)
-    : SimpleExpr(TypeConverter::toString(value))
+Literal::Literal(const datetime::Date value)
+    : SimpleExpr('\''+TypeConverter::toString(value)+'\'')
 {
-}
-
-template<>
-Literal::Literal(int value)
-    : SimpleExpr(TypeConverter::toString(value))
-{
-}
-
-template<>
-Literal::Literal(double value)
-    : SimpleExpr(TypeConverter::toString(value))
-{
-}
-
-template<>
-Literal::Literal(bool value)
-    : SimpleExpr(TypeConverter::toString(value))
-{
-}
-
-template<>
-Literal::Literal(IntLiteral value)
-    : SimpleExpr(TypeConverter::toString(value._value))
-{
-}
-
-IntLiteral::IntLiteral(int value)
-    : Literal(value),
-      _int(value)
-{
-}
-
-void IntLiteral::setValue(int value)
-{
-    _int = value;
-    _value = TypeConverter::toString(value);
-}
-
-int IntLiteral::value() const
-{
-    return _int;
 }
 
 namespace Operators {
@@ -75,14 +34,14 @@ Literal operator"" _l(char const* str, std::size_t)
     return Literal(str);
 }
 
-IntLiteral operator"" _l(unsigned long long value)
+ValueLiteral<unsigned long long> operator"" _l(unsigned long long value)
 {
-    return IntLiteral(static_cast<int>(value));
+    return ValueLiteral<unsigned long long>(value);
 }
 
-Literal operator"" _l(long double value)
+ValueLiteral<long double> operator"" _l(long double value)
 {
-    return Literal(static_cast<double>(value));
+    return ValueLiteral<long double>(value);
 }
 
 }

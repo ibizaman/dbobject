@@ -19,7 +19,7 @@ namespace impl {
     template<> struct TypeConverter<::dbobject::DummyLiteralObject> {
         static std::string toString(const ::dbobject::DummyLiteralObject& d, const Settings&)
         {
-            return "string: " + d.s;
+            return "'string: " + d.s + "'";
         }
     };
 }
@@ -52,7 +52,7 @@ TEST( SQLClause, ExplicitIntLiteral )
     SQL::IntLiteral l(30);
     EXPECT_EQ( "30", l() );
 
-    SQL::IntLiteral l2 = 30_l;
+    auto l2 = 30_l;
     EXPECT_EQ( "30", l2() );
 }
 

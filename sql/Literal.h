@@ -5,6 +5,7 @@
 #include "SimpleExpr.h"
 #include "polymorph/PolymorphicType.hxx"
 #include "lib/typeconverter/TypeConverter.h"
+#include "lib/Datetime.h"
 
 namespace dbobject {
 namespace SQL {
@@ -16,21 +17,25 @@ public:
     Literal(T);
 };
 
-class IntLiteral : public Literal
+template<typename T>
+class ValueLiteral : public Literal
 {
 public:
-    IntLiteral(int);
-    void setValue(int);
-    int value() const;
+    ValueLiteral(const T&);
+    void setValue(const T&);
+    T value() const;
+
 private:
-    int _int;
+    T _typedValue;
 };
+
+typedef ValueLiteral<int> IntLiteral;
 
 namespace Operators {
 IntLiteral& operator-(IntLiteral&);
 Literal operator"" _l(char const*, std::size_t);
-IntLiteral operator"" _l(unsigned long long);
-Literal operator"" _l(long double);
+ValueLiteral<unsigned long long> operator"" _l(unsigned long long);
+ValueLiteral<long double> operator"" _l(long double);
 }
 
 }
