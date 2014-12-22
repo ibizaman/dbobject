@@ -34,20 +34,27 @@ template<typename... Ts> struct VectorOfTuples<std::tuple<Ts...>>
 class Tuple
 {
 public:
-    typedef int count;
+    typedef Backend::count count;
 
     Tuple(std::shared_ptr<Backend>);
     void setBackend(std::shared_ptr<Backend>);
 
     /*
-     * Retreival of one tuple
+     * Provide passthrough to backend functions
+     */
+    std::shared_ptr<sql::ResultSet> query(const SQL::Select&);
+    count query(const SQL::Insert&);
+    count query(const SQL::Update&);
+
+    /*
+     * Retrieval of one tuple
      */
     template<typename T> T getOne(const SQL::Select&);
     template<typename T> T getOne(const SQL::TableName&, const SQL::Expression&);
     template<typename T> T getOne(const SQL::TableName&, const SQL::List<SQL::ColumnName>&, const SQL::Expression&);
 
     /*
-     * Retreival of multiple tuples, each corresponding to one query row
+     * Retrieval of multiple tuples, each corresponding to one query row
      */
     template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::Select&);
     template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&);
