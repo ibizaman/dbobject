@@ -51,7 +51,7 @@ public:
      */
     template<typename T> T getOne(const SQL::Select&);
     template<typename T> T getOne(const SQL::TableName&, const SQL::Expression&);
-    template<typename T> T getOne(const SQL::TableName&, const SQL::List<SQL::ColumnName>&, const SQL::Expression&);
+    template<typename T> T getOne(const SQL::TableName&, const SQL::List<SQL::SimpleExpr>&, const SQL::Expression&);
 
     /*
      * Retrieval of multiple tuples, each corresponding to one query row
@@ -59,8 +59,8 @@ public:
     template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::Select&);
     template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&);
     template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&, const SQL::Expression&);
-    template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&, const SQL::List<SQL::ColumnName>&);
-    template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&, const SQL::List<SQL::ColumnName>&, const SQL::Expression&);
+    template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&, const SQL::List<SQL::SimpleExpr>&);
+    template<typename T> typename VectorOfTuples<T>::type getAsTuples(const SQL::TableName&, const SQL::List<SQL::SimpleExpr>&, const SQL::Expression&);
 
     /*
      * Retreival of multiple vectors, each corresponding to one query column
@@ -68,8 +68,8 @@ public:
     template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::Select&);
     template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&);
     template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&, const SQL::Expression&);
-    template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&, const SQL::List<SQL::ColumnName>&);
-    template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&, const SQL::List<SQL::ColumnName>&, const SQL::Expression&);
+    template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&, const SQL::List<SQL::SimpleExpr>&);
+    template<typename T> typename TupleOfVectors<T>::type getAsVectors(const SQL::TableName&, const SQL::List<SQL::SimpleExpr>&, const SQL::Expression&);
 
     /*
      * Store new tuples
@@ -84,9 +84,9 @@ public:
     /*
      * Indifferently store new tuples or update existing tuples
      */
-    template<typename... Ts> void store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::ColumnName>, const std::tuple<Ts...>&);
-    template<typename... Ts> count store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::ColumnName>, const std::tuple<std::vector<Ts>...>&);
-    template<typename... Ts> count store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::ColumnName>, const std::vector<std::tuple<Ts...>>&);
+    template<typename... Ts> void store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::SimpleExpr>, const std::tuple<Ts...>&);
+    template<typename... Ts> count store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::SimpleExpr>, const std::tuple<std::vector<Ts>...>&);
+    template<typename... Ts> count store(const PolymorphicType<SQL::TableName>&, const SQL::List<SQL::SimpleExpr>, const std::vector<std::tuple<Ts...>>&);
 
 private:
     std::shared_ptr<Backend> _backend;

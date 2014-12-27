@@ -37,7 +37,7 @@ TEST_F( ObjectTest, getOne )
     expect.setInt(3);
     expect.setString("hello");
 
-    auto query = SQL::Query::select({"bool", "int", "string"})
+    auto query = SQL::Query::select({"bool"_c, "int"_c, "string"_c})
         .from("DummyObject")
         .where( SQL::Assignement<SQL::ColumnName, SQL::Literal>("string", "hello") );
 
@@ -66,7 +66,7 @@ TEST_F( ObjectTest, getList )
     expect2.setInt(4);
     expect2.setString("hello");
 
-    auto query = SQL::Query::select({"bool", "int", "string"})
+    auto query = SQL::Query::select({"bool"_c, "int"_c, "string"_c})
         .from("DummyObject")
         .where( SQL::Assignement<SQL::ColumnName, SQL::Literal>("string", "hello") );
 
@@ -108,7 +108,7 @@ TEST_F( ObjectTest, storeOne )
 
     auto query = SQL::Query::insert()
         .into("DummyObject")
-        .columnNames({"bool", "int", "string"})
+        .columnNames({"bool"_c, "int"_c, "string"_c})
         .addValues({false, 3, "hello"})
         .orUpdate();
 
@@ -133,7 +133,7 @@ TEST_F( ObjectTest, storeList )
 
     auto query = SQL::Query::insert()
         .into("DummyObject")
-        .columnNames({"bool", "int", "string"})
+        .columnNames({"bool"_c, "int"_c, "string"_c})
         .addValues({true, 3, "hello"})
         .addValues({false, 4, "hi"})
         .orUpdate();

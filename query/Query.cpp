@@ -11,7 +11,7 @@ Select Query::select()
     return Select();
 }
 
-Select Query::select(const List<ColumnName>& columns)
+Select Query::select(const List<SimpleExpr>& columns)
 {
     Select s;
     s.select(columns);

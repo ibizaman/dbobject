@@ -56,7 +56,7 @@ T Tuple::getOne(const SQL::TableName& table, const SQL::Expression& where)
 }
 
 template<typename T>
-T Tuple::getOne(const SQL::TableName& table, const SQL::List<SQL::ColumnName>& columns, const SQL::Expression& where)
+T Tuple::getOne(const SQL::TableName& table, const SQL::List<SQL::SimpleExpr>& columns, const SQL::Expression& where)
 {
     return getOne<T>(SQL::Query::select(columns)
             .from(table)
@@ -106,7 +106,7 @@ typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table,
 }
 
 template<typename T>
-typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table, const SQL::List<SQL::ColumnName>& columns)
+typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table, const SQL::List<SQL::SimpleExpr>& columns)
 {
     return getAsTuples<T>(SQL::Query::select(columns)
             .from(table)
@@ -114,7 +114,7 @@ typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table,
 }
 
 template<typename T>
-typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table, const SQL::List<SQL::ColumnName>& columns, const SQL::Expression& where)
+typename VectorOfTuples<T>::type Tuple::getAsTuples(const SQL::TableName& table, const SQL::List<SQL::SimpleExpr>& columns, const SQL::Expression& where)
 {
     return getAsTuples<T>(SQL::Query::select(columns)
             .from(table)
@@ -186,7 +186,7 @@ typename TupleOfVectors<T>::type
 
 template<typename T>
 typename TupleOfVectors<T>::type
-    Tuple::getAsVectors(const SQL::TableName& table, const SQL::List<SQL::ColumnName>& columns)
+    Tuple::getAsVectors(const SQL::TableName& table, const SQL::List<SQL::SimpleExpr>& columns)
 {
     return getAsVectors<T>(SQL::Query::select(columns)
             .from(table)
@@ -195,7 +195,7 @@ typename TupleOfVectors<T>::type
 
 template<typename T>
 typename TupleOfVectors<T>::type
-    Tuple::getAsVectors(const SQL::TableName& table, const SQL::List<SQL::ColumnName>& columns, const SQL::Expression& where)
+    Tuple::getAsVectors(const SQL::TableName& table, const SQL::List<SQL::SimpleExpr>& columns, const SQL::Expression& where)
 {
     return getAsVectors<T>(SQL::Query::select(columns)
             .from(table)
@@ -303,7 +303,7 @@ Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const st
 /*****************************/
 
 template<typename... Ts>
-void Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::ColumnName> columns, const std::tuple<Ts...>& tuple)
+void Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::SimpleExpr> columns, const std::tuple<Ts...>& tuple)
 {
     _backend->query(storeQuery(table, tuple)
             .columnNames(columns)
@@ -312,7 +312,7 @@ void Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<
 }
 
 template<typename... Ts>
-Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::ColumnName> columns, const std::tuple<std::vector<Ts>...>& vectors)
+Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::SimpleExpr> columns, const std::tuple<std::vector<Ts>...>& vectors)
 {
     return _backend->query(storeQuery(table, vectors)
             .columnNames(columns)
@@ -321,7 +321,7 @@ Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQ
 }
 
 template<typename... Ts>
-Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::ColumnName> columns, const std::vector<std::tuple<Ts...>>& tuples)
+Tuple::count Tuple::store(const PolymorphicType<SQL::TableName>& table, const SQL::List<SQL::SimpleExpr> columns, const std::vector<std::tuple<Ts...>>& tuples)
 {
     return _backend->query(storeQuery(table, tuples)
             .columnNames(columns)

@@ -326,6 +326,15 @@ TEST( SQLClause, AssignementList )
     EXPECT_EQ( "false", (*(*assignement)->right())() );
 }
 
+TEST( SQLClause, SimpleExprList )
+{
+    SQL::List<SQL::ColumnName> c_list({"a"_c, "b"_c});
+    SQL::List<SQL::SimpleExpr> s_list(c_list);
+
+    ASSERT_EQ( "`a`, `b`", c_list() );
+    ASSERT_EQ( "`a`, `b`", s_list() );
+}
+
 TEST( SQLClause, And )
 {
     SQL::Expression expr("a"_c == 1_l && "b"_c == "b"_l);

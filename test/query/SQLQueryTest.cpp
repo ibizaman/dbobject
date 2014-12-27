@@ -29,7 +29,7 @@ TEST( SQLSelectTest, select )
 {
     SQL::Select query;
 
-    query.select({"colA"});
+    query.select({"colA"_c});
     ASSERT_THROW( query.getSQL(), SQL::malformed_sql );
 }
 
@@ -37,7 +37,7 @@ TEST( SQLSelectTest, selectFrom )
 {
     SQL::Select query;
 
-    query.from("table").select({"colA","colB"});
+    query.from("table").select({"colA"_c, "colB"_c});
     std::string sql = "SELECT `colA`, `colB` FROM `table`";
 
     ASSERT_EQ( sql, query.getSQL() );

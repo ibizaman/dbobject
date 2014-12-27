@@ -17,7 +17,7 @@ public:
     typedef Sort<ColumnName> OrderBy;
 
     Select& select();
-    Select& select(const List<ColumnName>&);
+    Select& select(const List<SimpleExpr>&);
     Select& from(const PolymorphicType<TableName>&);
     Select& join(const List<Join>&);
     Select& distinct(bool = true);
@@ -31,7 +31,7 @@ public:
     virtual std::string getSQL() const override;
 
 private:
-    Delayed<List<ColumnName>> _columns;
+    Delayed<List<SimpleExpr>> _columns;
     Delayed<PolymorphicType<TableName>> _from;
     List<Join> _joins;
     Delayed<bool> _distinct;

@@ -58,11 +58,11 @@ std::string Select::getSQL() const
 
 Select& Select::select()
 {
-    _columns = List<ColumnName>();
+    _columns = List<SimpleExpr>();
     return *this;
 }
 
-Select& Select::select(const List<ColumnName>& columns)
+Select& Select::select(const List<SimpleExpr>& columns)
 {
     _columns = columns;
     return *this;

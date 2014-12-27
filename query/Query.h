@@ -25,7 +25,7 @@ public:
     typedef Assignement<ColumnName,SimpleExpr> ColumnAssignement;
 
     static Select select();
-    static Select select(const List<ColumnName>&);
+    static Select select(const List<SimpleExpr>&);
     static Insert insert();
     static Insert insert(const List<ColumnAssignement>&);
     static Update update(const PolymorphicType<TableName>&);
