@@ -3,6 +3,7 @@
 #include "Clause.h"
 #include "ColumnName.h"
 #include "Expression.h"
+#include "Function.h"
 #include "Join.h"
 #include "JoinedTable.h"
 #include "List.h"

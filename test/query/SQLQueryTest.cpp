@@ -113,6 +113,16 @@ TEST( SQLSelectTest, fromLimit2 )
     ASSERT_EQ( sql, query.getSQL() );
 }
 
+TEST( SQLSelectTest, fromCount )
+{
+    SQL::Select query;
+
+    query.from("table").select({SQL::Count()});
+    std::string sql = "SELECT COUNT(*) FROM `table`";
+
+    ASSERT_EQ( sql, query.getSQL() );
+}
+
 TEST( SQLInsertTest, insert )
 {
     SQL::Insert query;

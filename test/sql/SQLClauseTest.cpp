@@ -170,6 +170,18 @@ TEST( SQLClause, ColumnNameSyntaxicSugar )
     EXPECT_EQ( "`yo`", c.name() );
 }
 
+TEST( SQLClause, FunctionCountAll )
+{
+    auto c = SQL::Count();
+    EXPECT_EQ( "COUNT(*)", c() );
+}
+
+TEST( SQLClause, FunctionCountOne )
+{
+    auto c = SQL::Count("hello"_c);
+    EXPECT_EQ( "COUNT(`hello`)", c() );
+}
+
 TEST( SQLClause, Alias )
 {
     SQL::Alias<SQL::Literal> alias("hello"_l, "hi");
@@ -186,6 +198,12 @@ TEST( SQLClause, AliasPolymorphism )
 
     SQL::Alias<SQL::Literal> sugar = 30_l | "hi";
     EXPECT_EQ( "30 AS `hi`", sugar() );
+}
+
+TEST( SQLClause, AliasCount )
+{
+    auto alias = SQL::Count() | "Number of Guys";
+    EXPECT_EQ( "COUNT(*) AS `Number of Guys`", alias() );
 }
 
 TEST( SQLClause, Sort )

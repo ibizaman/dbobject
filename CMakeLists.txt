@@ -14,6 +14,7 @@ add_library(dbobject
     sql/Clause.cpp
     sql/ColumnName.cpp
     sql/Expression.cpp
+    sql/Function.cpp
     sql/Join.cpp
     sql/JoinedTable.cpp
     sql/Literal.cpp
