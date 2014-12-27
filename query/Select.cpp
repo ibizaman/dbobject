@@ -7,50 +7,48 @@ std::string Select::getSQL() const
 {
     std::string sql;
 
-    try {
+    sql += "SELECT ";
+    if (_distinct.initialized()) {
+        sql += "DISTINCT ";
+    }
+    if (!_columns.initialized()) {
+        sql += "*";
+    } else {
+        sql += _columns.get()();
+    }
 
-        sql += "SELECT ";
-        if (_distinct.initialized()) {
-            sql += "DISTINCT ";
-        }
-        if (!_columns.initialized()) {
-            sql += "*";
-        } else {
-            sql += _columns.get()();
-        }
-
+    if (!_from.initialized()) {
+        throw malformed_sql("Select query malformed, missing FROM clause : \"" + sql + "\"");
+    } else {
         sql += " FROM " + (*_from.get())();
+    }
 
-        if (!_joins.empty()) {
-            sql += " JOIN " + _joins();
+    if (!_joins.empty()) {
+        sql += " JOIN " + _joins();
+    }
+
+    if (_where.initialized() && !(*_where.get()).empty()) {
+        sql += " WHERE " + (*_where.get())();
+    }
+
+    if (!_groupBy.empty()) {
+        sql += " GROUP BY " + _groupBy();
+    }
+
+    if (_having.initialized()) {
+        sql += " HAVING " + (*_having.get())();
+    }
+
+    if (!_orderBy.empty()) {
+        sql += " ORDER BY " + _orderBy();
+    }
+
+    if (_limit_row_count.initialized()) {
+        sql += " LIMIT ";
+        if (_limit_offset.initialized()) {
+            sql += (_limit_offset.get())() + ", ";
         }
-
-        if (_where.initialized() && !(*_where.get()).empty()) {
-            sql += " WHERE " + (*_where.get())();
-        }
-
-        if (!_groupBy.empty()) {
-            sql += " GROUP BY " + _groupBy();
-        }
-
-        if (_having.initialized()) {
-            sql += " HAVING " + (*_having.get())();
-        }
-
-        if (!_orderBy.empty()) {
-            sql += " ORDER BY " + _orderBy();
-        }
-
-        if (_limit_row_count.initialized()) {
-            sql += " LIMIT ";
-            if (_limit_offset.initialized()) {
-                sql += (_limit_offset.get())() + ", ";
-            }
-            sql += (_limit_row_count.get())();
-        }
-
-    } catch(non_initialized_optional&) {
-        throw malformed_sql("Select query malformed : " + sql);
+        sql += (_limit_row_count.get())();
     }
 
     return sql;
