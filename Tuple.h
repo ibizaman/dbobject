@@ -141,10 +141,10 @@ private:
 
     // Transform a tuple of vectors' row into a list of literals
     template<typename TupleOfVectors, int I>
-        auto tupleOfVectorsRowToLiterals(const TupleOfVectors&, int) const
+        auto tupleOfVectorsRowToLiterals(const TupleOfVectors&, size_t) const
         -> typename std::enable_if<I == std::tuple_size<TupleOfVectors>::value, SQL::List<SQL::Literal>>::type;
     template<typename TupleOfVectors, int I = 0>
-        auto tupleOfVectorsRowToLiterals(const TupleOfVectors&, int) const
+        auto tupleOfVectorsRowToLiterals(const TupleOfVectors&, size_t) const
         -> typename std::enable_if<I != std::tuple_size<TupleOfVectors>::value, SQL::List<SQL::Literal>>::type;
 
     // Queries to insert

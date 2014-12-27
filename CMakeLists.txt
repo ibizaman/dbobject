@@ -44,6 +44,9 @@ set(TEST_SOURCE_FILES
     test/polymorph/PolymorphicTypeTest.cpp
     test/query/SQLQueryTest.cpp
     test/sql/SQLClauseTest.cpp
+    test/MySQLBackendTest.cpp
+    test/TupleTest.cpp
+    test/ObjectTest.cpp
 )
 
 find_package(MYSQLCONNECTORCPP REQUIRED)
@@ -59,6 +62,7 @@ target_link_libraries(dbobjectTest
     ${GTEST_BOTH_LIBRARIES}
     ${Boost_LIBRARIES}
     ${GMOCK_LIBRARIES}
+    -lpthread
 )
 gtest_add_tests(dbobjectTest "" ${TEST_SOURCE_FILES})
 

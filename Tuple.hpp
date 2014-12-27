@@ -228,14 +228,14 @@ auto Tuple::tupleToLiterals(const Tup& typedValues) const
 }
 
 template<typename TupleOfVectors, int I>
-    auto Tuple::tupleOfVectorsRowToLiterals(const TupleOfVectors&, int) const
+    auto Tuple::tupleOfVectorsRowToLiterals(const TupleOfVectors&, size_t) const
     -> typename std::enable_if<I == std::tuple_size<TupleOfVectors>::value, SQL::List<SQL::Literal>>::type
 {
     return SQL::List<SQL::Literal>();
 }
 
 template<typename TupleOfVectors, int I>
-    auto Tuple::tupleOfVectorsRowToLiterals(const TupleOfVectors& vectors, int row) const
+    auto Tuple::tupleOfVectorsRowToLiterals(const TupleOfVectors& vectors, size_t row) const
     -> typename std::enable_if<I != std::tuple_size<TupleOfVectors>::value, SQL::List<SQL::Literal>>::type
 {
     SQL::Literal stringValue(std::get<I>(vectors).at(row));
@@ -258,7 +258,7 @@ template<typename... Ts>
 SQL::Insert Tuple::storeQuery(const PolymorphicType<SQL::TableName>& table, const std::tuple<std::vector<Ts>...>& vectors)
 {
     auto query = SQL::Query::insert().into(*table);
-    for (int i = 0; i < std::get<0>(vectors).size(); ++i) {
+    for (size_t i = 0; i < std::get<0>(vectors).size(); ++i) {
         query.addValues(tupleOfVectorsRowToLiterals(vectors, i));
     }
     return query;
