@@ -45,6 +45,16 @@ void Object::storeList(const typename List<T>::type& objects)
     }
 }
 
+template<typename T>
+unsigned int Object::count()
+{
+    SQL::Select query;
+    query.select({SQL::Count()}).from(Properties<T>::table);
+
+    auto result = _db->getOne<std::tuple<unsigned int>>(query);
+    return std::get<0>(result);
+}
+
 // mapOnGetters
 
 template<typename Tuple, typename T, typename... Getters>

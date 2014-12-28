@@ -150,3 +150,18 @@ TEST_F( ObjectTest, storeListEmpty )
     // nothing expected - no sql call should be done
     db->storeList<DummyObject>(list);
 }
+
+TEST_F( ObjectTest, count )
+{
+    auto query = SQL::Query::select({SQL::Count()})
+        .from("DummyObject");
+
+    EXPECT_CALL( *backend, query(query) ).WillOnce(Return(result));
+    EXPECT_CALL( *result, next() ).WillOnce(Return(true));
+    EXPECT_CALL( *result, getUInt(1) ).WillOnce(Return(5)).RetiresOnSaturation();
+
+    auto count = db->count<DummyObject>();
+
+    EXPECT_EQ( count, 5 );
+}
+

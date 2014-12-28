@@ -27,6 +27,9 @@ public:
     template<typename T>
         void storeList(const typename List<T>::type&);
 
+    template<typename T>
+        unsigned int count();
+
     template<typename Tuple, typename T, typename... Getters>
         static Tuple mapOnGetters(T, Getters...);
 
