@@ -49,6 +49,20 @@ template<typename T>
 unsigned int Object::count()
 {
     SQL::Select query;
+    return count<T>(query);
+}
+
+template<typename T>
+unsigned int Object::count(const SQL::Expression& where)
+{
+    SQL::Select query;
+    query.where(where);
+    return count<T>(query);
+}
+
+template<typename T>
+unsigned int Object::count(SQL::Select query)
+{
     query.select({SQL::Count()}).from(Properties<T>::table);
 
     auto result = _db->getOne<std::tuple<unsigned int>>(query);

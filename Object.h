@@ -29,6 +29,10 @@ public:
 
     template<typename T>
         unsigned int count();
+    template<typename T>
+        unsigned int count(const SQL::Expression&);
+    template<typename T>
+        unsigned int count(SQL::Select);
 
     template<typename Tuple, typename T, typename... Getters>
         static Tuple mapOnGetters(T, Getters...);
