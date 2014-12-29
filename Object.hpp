@@ -13,7 +13,16 @@ typename Ptr<T>::type Object::getOne(const SQL::Expression& where)
 template<typename T>
 typename List<T>::type Object::getList(const SQL::Expression& where)
 {
-    auto list = _db->getAsTuples<typename Properties<T>::tuple>(Properties<T>::table, Properties<T>::fields, where);
+    SQL::Select query;
+    query.where(where);
+    return getList<T>(query);
+}
+
+template<typename T>
+typename List<T>::type Object::getList(SQL::Select query)
+{
+    query.select(Properties<T>::fields).from(Properties<T>::table);
+    auto list = _db->getAsTuples<typename Properties<T>::tuple>(query);
 
     typename List<T>::type objects;
     objects.reserve(objects.size());

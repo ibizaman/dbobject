@@ -3,6 +3,7 @@
 
 #include "Types.h"
 #include "sql/Expression.h"
+#include "query/Select.h"
 
 namespace dbobject {
 
@@ -21,6 +22,8 @@ public:
         typename Ptr<T>::type getOne(const SQL::Expression&);
     template<typename T>
         typename List<T>::type getList(const SQL::Expression& = SQL::Expression());
+    template<typename T>
+        typename List<T>::type getList(SQL::Select);
 
     template<typename T>
         void storeOne(const typename Ptr<T>::type&);
