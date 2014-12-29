@@ -143,7 +143,7 @@ TEST_F( TupleTest, getAsTuples )
 TEST_F( TupleTest, storeOne )
 {
     test_tuple to_store{true, 365, "hello"};
-    SQL::Insert query = SQL::Query::insert().into("table").addValues({true, 365, "hello"}); 
+    SQL::Insert query = SQL::Query::insert().into("table").addValues({true, 365, "hello"});
 
     EXPECT_CALL( *backend, query(query) );
 
