@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
-#include <boost/date_time/gregorian/gregorian.hpp>
 #include "lib/typeconverter/TypeConverter.h"
 #include "lib/Datetime.h"
 
