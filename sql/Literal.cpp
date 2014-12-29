@@ -3,20 +3,22 @@
 namespace dbobject {
 namespace SQL {
 
-template<>
-Literal::Literal(std::string value)
+Literal::Literal(const std::string& value)
     : SimpleExpr('\''+value+'\'')
 {
 }
 
-template<>
 Literal::Literal(const char* value)
     : SimpleExpr('\''+std::string(value)+'\'')
 {
 }
 
-template<>
-Literal::Literal(const datetime::Date value)
+Literal::Literal(const datetime::Date& value)
+    : SimpleExpr('\''+TypeConverter::toString(value)+'\'')
+{
+}
+
+Literal::Literal(const datetime::Datetime& value)
     : SimpleExpr('\''+TypeConverter::toString(value)+'\'')
 {
 }

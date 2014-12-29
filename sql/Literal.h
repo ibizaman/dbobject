@@ -15,6 +15,10 @@ class Literal : public SimpleExpr
 public:
     template<typename T>
     Literal(T);
+    Literal(const std::string&);
+    Literal(const char*);
+    Literal(const datetime::Date&);
+    Literal(const datetime::Datetime&);
 };
 
 template<typename T>
