@@ -31,23 +31,18 @@ add_library(dbobject
 target_link_libraries(dbobject utils typeconverter)
 
 
-enable_testing()
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-find_package(GMock REQUIRED)
-include_directories(${GMOCK_INCLUDE_DIRS})
-
-set(TEST_SOURCE_FILES
-    test/dummy/DummyObject.cpp
-    test/functional/MapHelperTest.cpp
-    test/functional/VectorHelperTest.cpp
-    test/polymorph/DelayedTest.cpp
-    test/polymorph/PolymorphicTypeTest.cpp
-    test/query/SQLQueryTest.cpp
-    test/sql/SQLClauseTest.cpp
-    test/MySQLBackendTest.cpp
-    test/TupleTest.cpp
-    test/ObjectTest.cpp
+set(TEST_SOURCE_FILES ${TEST_SOURCE_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/dummy/DummyObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/functional/MapHelperTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/functional/VectorHelperTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/polymorph/DelayedTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/polymorph/PolymorphicTypeTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/query/SQLQueryTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/sql/SQLClauseTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/MySQLBackendTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/TupleTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/ObjectTest.cpp
+    PARENT_SCOPE
 )
 
 find_package(MYSQLCONNECTORCPP REQUIRED)
@@ -56,14 +51,10 @@ include_directories(${MYSQLCONNECTORCPP_INCLUDE_DIRS})
 find_package(Boost REQUIRED COMPONENTS date_time)
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(dbobjectTest ${TEST_SOURCE_FILES})
-target_link_libraries(dbobjectTest 
+set(TEST_LINK_LIBRARIES ${TEST_LINK_LIBRARIES}
     dbobject
     ${MYSQLCONNECTORCPP_LIBRARIES}
-    ${GTEST_BOTH_LIBRARIES}
     ${Boost_LIBRARIES}
-    ${GMOCK_LIBRARIES}
-    -lpthread
+    PARENT_SCOPE
 )
-gtest_add_tests(dbobjectTest "" ${TEST_SOURCE_FILES})
 
