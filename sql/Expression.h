@@ -2,6 +2,7 @@
 #define DBOBJECT_SQL_EXPRESSION_H
 
 #include "Clause.h"
+#include "ColumnName.h"
 #include "List.h"
 #include "SimpleExpr.h"
 
@@ -32,7 +33,7 @@ Expression nullSafeEqual(const SimpleExpr&, const SimpleExpr&);
 Expression operator>=(const SimpleExpr&, const SimpleExpr&);
 Expression operator>(const SimpleExpr&, const SimpleExpr&);
 Expression greatest(const List<SimpleExpr>&);
-Expression in(const List<SimpleExpr>&);
+Expression in(const ColumnName&, const List<SimpleExpr>&);
 Expression interval(const List<SimpleExpr>&);
 Expression isNull(const SimpleExpr&);
 Expression operator==(bool, const SimpleExpr&); // IS operator

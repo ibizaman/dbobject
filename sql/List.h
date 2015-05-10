@@ -18,6 +18,7 @@ public:
 
     List();
     List(std::initializer_list<PolymorphicType<T>>);
+    template<typename U> List(const std::vector<U>&);
     template<typename U> List(const List<U>&);
 
     std::string operator()() const override;

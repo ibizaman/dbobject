@@ -54,9 +54,9 @@ Expression greatest(const List<SimpleExpr>& list)
     return Expression("GREATEST("+list()+")");
 }
 
-Expression in(const List<SimpleExpr>& list)
+Expression in(const ColumnName& column, const List<SimpleExpr>& list)
 {
-    return Expression("IN("+list()+")");
+    return Expression(column() + " IN("+list()+")");
 }
 
 Expression interval(const List<SimpleExpr>& list)

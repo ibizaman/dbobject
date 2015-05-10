@@ -327,6 +327,20 @@ TEST( SQLClause, List )
     EXPECT_EQ( "3", (**value)() );
 }
 
+TEST( SQLClause, ListFromVector )
+{
+    std::vector<int> v{1, 3, 4};
+    SQL::List<SQL::Literal> list(v);
+    ASSERT_EQ( "1, 3, 4", list() );
+
+    auto value = list.begin();
+    EXPECT_EQ( "1", (**value)() );
+    ++value;
+    EXPECT_EQ( "3", (**value)() );
+    ++value;
+    EXPECT_EQ( "4", (**value)() );
+}
+
 TEST( SQLClause, AssignementList )
 {
     SQL::List<SQL::Assignement<SQL::ColumnName, SQL::Literal>> list({"a"_c == 1_l, "b"_c == "b"_l, "c"_c == SQL::Literal(false)});
@@ -398,6 +412,15 @@ TEST( SQLClause, XorEmpty )
  
     ASSERT_EQ("`a` = 1", expr1());
     ASSERT_EQ("`a` = 1", expr2());
+}
+
+TEST( SQLClause, in )
+{
+    SQL::Expression expr1(in("column"_c, {"a"_l, "b"_l, 3_l}));
+    SQL::Expression expr2(in("column"_c, std::vector<SQL::Literal>{1, 2}));
+ 
+    ASSERT_EQ("`column` IN('a', 'b', 3)", expr1());
+    ASSERT_EQ("`column` IN(1, 2)", expr2());
 }
 
 }

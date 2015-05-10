@@ -24,6 +24,15 @@ List<T>::List(std::initializer_list<PolymorphicType<T>> other)
 
 template<typename T>
 template<typename U>
+List<T>::List(const std::vector<U>& other)
+{
+    for (auto o : other) {
+        _list.push_back(o);
+    }
+}
+
+template<typename T>
+template<typename U>
 List<T>::List(const List<U>& other)
 {
     for (auto o : other) {
