@@ -112,6 +112,156 @@ See the [vagrant](https://www.vagrantup.com/)
 website for more information.
 
 
+SQL Example
+-----------
+
+Build a fairly complex SELECT query:
+```c++
+auto query = SQL::Query::select({"colA"_c, "colB"_c, "colC"_c})
+    .limit(10)
+    .from("MyTable")
+    .orderBy({
+            "colA"_c,
+            "colB"_c | SQL::Direction::DESC,
+            "colC"_c | SQL::Direction::ASC
+        })
+    .where(("colA"_c == "A"_l && "colB"_c == "B"_l) || "colC"_c == "C"_l)
+
+assert(query.getSQL() == "SELECT * FROM `MyTable`"
+                         "WHERE `colA` = 'A' AND `colB` = 'B' OR `colC` = 'C'"
+                         "ORDER BY `colA`, `colB` DESC, `colC`"
+                         "LIMIT 10"
+```
+
+As you can see, the order of calls has no importance and the query is
+always well-formed.
+
+
+Tuple Example
+-------------
+
+Store a vector of tuples:
+```c++
+std::vector<std::tuple<bool, int, std::string>> to_store{
+    std::make_tuple(true, 365, "hello"),
+    std::make_tuple(false, 320, "hi"),
+    std::make_tuple(false, 250, "howdy")
+};
+
+db.store("MyTable", to_store);
+// you can also specify explicitely the column names
+db.store("MyTable", {"a", "b", "c"}, to_store);
+```
+
+Store a tuple of vectors:
+```c++
+std::tuple<std::vector<bool>, std::vector<int>, std::vector<std::string>> to_store{
+    {true, false, false},
+    {365, 320, 250},
+    {"hello", "hi", "howdy"}
+};
+
+db.store("MyTable", to_store);
+```
+
+
 ORM Example
 -----------
+
+Here we'll see how to retrieve and store a class in the database. This
+example requires a bit more preparation.
+
+Let's say we have the following class with two private attributes and
+associated setters and getters and one public attribute:
+```c++
+class MyObject
+{
+public:
+    void setBool(bool b) {_b = b;}
+    int getBool() const {return _b;}
+    void setInt(int i) {_i = i;}
+    int getInt() const {return _i;}
+
+    std::string s;
+
+private:
+    bool _b;
+    int _i;
+};
+```
+
+You then need to specialize the `Object::Properties` struct to inform
+dbobject how to fill in and extract values from the class:
+```c++
+template<> struct Object::Properties<MyObject>
+{
+    typedef std::tuple<bool, int, std::string> tuple;
+    static const SQL::List<SQL::ColumnName> fields;
+    static const SQL::TableName table;
+
+    static Ptr<MyObject>::type fromTuple(const tuple& t)
+    {
+        return mapOnSetters<MyObject>(
+                t,
+                &MyObject::setBool,
+                &MyObject::setInt,
+                &MyObject::s
+            );
+    }
+
+    static tuple toTuple(const Ptr<MyObject>::type& o)
+    {
+        return mapOnGetters<tuple>(
+                o,
+                &MyObject::getBool,
+                &MyObject::getInt,
+                &MyObject::s
+            );
+    }
+};
+
+const SQL::List<SQL::ColumnName> Object::Properties<MyObject>::fields = {
+    "bool", "int", "string"
+};
+const SQL::TableName Object::Properties<MyObject>::table("MyTable");
+```
+
+We can retrieve one object with a WHERE clause:
+```c++
+auto o = db->getOne<DummyObject>("string"_c == "hello"_l);
+```
+
+We can also retrieve a list of objects:
+```c++
+auto list = db->getList<DummyObject>();
+```
+
+We can store an object:
+```c++
+Ptr<DummyObject>::type o(new DummyObject);
+o->setBool(false);
+o->setInt(3);
+o->s = "hello";
+
+db.storeOne<MyObject>(o);
+```
+
+We can also store multiple objects at once:
+```c++
+Ptr<MyObject>::type o1(new MyObject);
+o1->setBool(true);
+o1->setInt(3);
+o1->s = "hello";
+
+Ptr<MyObject>::type o2(new MyObject);
+o2->setBool(false);
+o2->setInt(4);
+o2->s = "hi";
+
+List<MyObject>::type list;
+list.push_back(o1);
+list.push_back(o2);
+
+db->storeList<MyObject>(list);
+```
 
