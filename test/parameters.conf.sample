@@ -1,0 +1,12 @@
+# Make a copy of this file in the same directory
+# and make sure you make a chmod 600 on it since
+# it contains sensitive information
+
+###########################################
+# Dummy database used for integration tests
+###########################################
+hostName=localhost
+userName=root
+password=root
+schema=dbobject_test
+

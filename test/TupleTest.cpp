@@ -4,8 +4,8 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
-#include "test/mock/BackendMock.h"
-#include "test/mock/ResultSetMock.h"
+#include "mock/BackendMock.h"
+#include "mock/ResultSetMock.h"
 
 using testing::Return;
 using testing::ReturnPointee;

@@ -1,5 +1,5 @@
 #include "Tuple.h"
-#include "sql/All.h"
+#include "query/sql/All.h"
 
 namespace dbobject {
 

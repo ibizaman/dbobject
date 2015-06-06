@@ -2,8 +2,8 @@
 #define DBOBJECT_OBJECT_H
 
 #include "Types.h"
-#include "sql/Expression.h"
 #include "query/Select.h"
+#include "query/sql/Expression.h"
 
 namespace dbobject {
 
